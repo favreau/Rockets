@@ -20,6 +20,7 @@
  */
 
 #include "registry.h"
+#include "response.h"
 
 #include "../json.hpp"
 
@@ -96,7 +97,8 @@ Registry::SearchResult Registry::findEndpoint(const Method method,
 Registry::FuncMap::const_iterator Registry::_find(
     const Registry::FuncMap& funcMap, const std::string& path) const
 {
-    const auto beginsWithPath = [&path](const FuncMap::value_type& pair) {
+    const auto beginsWithPath = [&path](const FuncMap::value_type& pair)
+    {
         const auto& endpoint = pair.first;
         return endpoint.empty() ? path.empty() : path.find(endpoint) == 0;
     };
@@ -128,5 +130,5 @@ std::string Registry::toJson() const
         _append(body[i.first], "OPTIONS");
     return body.dump(4);
 }
-}
-}
+} // namespace http
+} // namespace rockets

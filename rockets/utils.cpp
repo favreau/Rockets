@@ -36,6 +36,7 @@
 #include <sys/socket.h>
 #endif
 
+#include <stdexcept>
 #include <vector>
 
 namespace rockets
@@ -43,8 +44,9 @@ namespace rockets
 Uri parse(const std::string& uri)
 {
     // uri is modified by lws_parse_uri(), make a copy.
-    // WAR: pre-C++11 stdlib has copy-on-write semantics for strings, make sure
-    // the string is REALLY copied by using the specific constructor below:
+    // WAR: pre-C++11 stdlib has copy-on-write semantics for strings, make
+    // sure the string is REALLY copied by using the specific constructor
+    // below:
     auto copy = std::string(uri.data(), uri.length());
     auto in = const_cast<char*>(copy.c_str());
     const char* protocol = nullptr;
@@ -115,7 +117,7 @@ size_t _getIPAddressLength(ifaddrs* interface)
         throw std::logic_error("No IPv4/6 in your universe?!");
     }
 }
-}
+} // namespace
 
 std::string getIP(const std::string& iface)
 {
@@ -190,4 +192,4 @@ std::string getHostname()
     host[NI_MAXHOST - 1] = '\0';
     return host;
 }
-}
+} // namespace rockets
