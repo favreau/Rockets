@@ -313,7 +313,7 @@ class AsyncClient:
         )
 
     def _setup_progress_filter(self, response_future, request_id):
-        task = asyncio.Task.current_task()
+        task = asyncio.current_task
         if task and isinstance(task, RequestTask):
 
             def _progress_filter(value):
@@ -338,7 +338,7 @@ class AsyncClient:
             response_future.add_done_callback(_done_callback)
 
     def _setup_batch_progress_filter(self, response_future, request_ids):
-        task = asyncio.Task.current_task()
+        task = asyncio.current_task
         items = dict()
         if task and isinstance(task, RequestTask):
 

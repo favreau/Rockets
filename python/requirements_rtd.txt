@@ -17,7 +17,7 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 # All rights reserved. Do not distribute without further notice.
 
-json-rpc~=1.11.1
+json-rpc~=1.14.0
 nbsphinx~=0.4.1
 rx~=1.6.1
-websockets~=7.0
+websockets~=10.4
