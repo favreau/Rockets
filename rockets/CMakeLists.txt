@@ -115,9 +115,9 @@ set(ROCKETS_SOURCES
 # libwebsockets15 comes with cmake package info, which makes websockets the static library
 # This results on an error because we are linking a static library with a dynamic one without -fPIC
 if(TARGET websockets_shared)
-	set(ROCKETS_LINK_LIBRARIES PUBLIC Threads::Threads PRIVATE websockets_shared)
+	set(ROCKETS_LINK_LIBRARIES PUBLIC Threads::Threads PRIVATE websockets_shared uv)
 else()
-	set(ROCKETS_LINK_LIBRARIES PUBLIC Threads::Threads PRIVATE websockets)
+	set(ROCKETS_LINK_LIBRARIES PUBLIC Threads::Threads PRIVATE websockets uv)
 endif()
 
 

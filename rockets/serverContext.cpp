@@ -24,6 +24,8 @@
 #include "unavailablePortError.h"
 #include "ws/connection.h"
 
+#include <uv.h>
+
 #include <string.h> // memset
 
 #if LWS_LIBRARY_VERSION_NUMBER >= 3000000
