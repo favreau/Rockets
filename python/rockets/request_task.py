@@ -29,7 +29,7 @@ class RequestTask(asyncio.Task):
     """Extend asyncio.Task to add callbacks for progress reporting while the request is not done."""
 
     def __init__(self, coro, *, loop=None):
-        super().__init__(coro=coro, loop=loop)
+        super().__init__(coro=coro)
         self._progress_callbacks = []
 
     def add_progress_callback(self, fn):

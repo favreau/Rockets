@@ -25,19 +25,18 @@
 import os
 from setuptools import setup
 import pathlib
-import pkg_resources
 
 BASEDIR = os.path.dirname(os.path.abspath(__file__))
 
 
 def parse_reqs(reqs_file):
     ''' parse the requirements '''
-    install_reqs = list()
     with pathlib.Path(reqs_file).open() as requirements_txt:
-        install_reqs = [str(requirement)
-                        for requirement
-                        in pkg_resources.parse_requirements(requirements_txt)]
-    return install_reqs
+        return [
+            line.strip()
+            for line in requirements_txt
+            if line.strip() and not line.startswith('#')
+        ]
 
 
 REQS = parse_reqs(os.path.join(BASEDIR, "requirements.txt"))

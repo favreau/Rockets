@@ -72,7 +72,7 @@ class AsyncClient:
 
         def _ws_loop(observer):
             """Internal: synchronous wrapper for async _ws_loop"""
-            asyncio.ensure_future(self._ws_loop(observer), loop=self.loop)
+            asyncio.ensure_future(self._ws_loop(observer))
 
         # pylint: disable=E1101
         self.ws_observable = Observable.create(_ws_loop).publish().auto_connect()
@@ -118,7 +118,6 @@ class AsyncClient:
             subprotocols=self._subprotocols,
             max_size=None,
             ping_timeout=None,
-            loop=self.loop,
         )
 
     async def disconnect(self):
@@ -225,10 +224,10 @@ class AsyncClient:
         :return: :class:`RequestTask` object
         :rtype: :class:`RequestTask`
         """
-        self.loop.set_task_factory(lambda loop, coro: RequestTask(coro=coro, loop=loop))
+        self.loop.set_task_factory(lambda loop, coro: RequestTask(coro=coro))
 
         task = self.request(method, params)
-        return asyncio.ensure_future(task, loop=self.loop)
+        return asyncio.ensure_future(task)
 
     def async_batch(self, requests):
         """
@@ -238,10 +237,10 @@ class AsyncClient:
         :return: :class:`RequestTask` object
         :rtype: :class:`RequestTask`
         """
-        self.loop.set_task_factory(lambda loop, coro: RequestTask(coro=coro, loop=loop))
+        self.loop.set_task_factory(lambda loop, coro: RequestTask(coro=coro))
 
         task = self.batch(requests)
-        return asyncio.ensure_future(task, loop=self.loop)
+        return asyncio.ensure_future(task)
 
     async def _ws_loop(self, observer):
         """Internal: The loop for feeding an rxpy observer."""
@@ -313,7 +312,7 @@ class AsyncClient:
         )
 
     def _setup_progress_filter(self, response_future, request_id):
-        task = asyncio.current_task
+        task = asyncio.current_task()
         if task and isinstance(task, RequestTask):
 
             def _progress_filter(value):
@@ -338,7 +337,7 @@ class AsyncClient:
             response_future.add_done_callback(_done_callback)
 
     def _setup_batch_progress_filter(self, response_future, request_ids):
-        task = asyncio.current_task
+        task = asyncio.current_task()
         items = dict()
         if task and isinstance(task, RequestTask):
 
